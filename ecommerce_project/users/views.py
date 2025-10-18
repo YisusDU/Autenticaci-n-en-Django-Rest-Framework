@@ -42,6 +42,5 @@ class UserProfileView(generics.ListAPIView):
         data = {
             "username": user.username,
             "email": user.email,
-           #"password": user.password
         }
         return Response(data)

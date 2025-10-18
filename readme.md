@@ -56,7 +56,7 @@ cd .\ecommerce_project\
 
 ### ecommerce_project\ecommerce_project\settings.py
 
-En actividades pasadas, cree una app llamada user que sólo contenía el serializer, es esta ocasión la vamos a aprovechar
+En actividades pasadas, cree una app llamada user que sólo contenía el serializer, en esta ocasión la vamos a aprovechar
 
 Agregamos la configuración de JWT en settings, adicionalmente, descomentamos el renderer JSON
 
@@ -129,13 +129,6 @@ from .serializers import UserSerializer
 from rest_framework import generics
 from rest_framework.permissions import IsAuthenticated 
 
-@api_view(['POST'])
-def logout_view(request):
-
-    if request.method == "POST":
-        request.user.auth_token.delete()  
-        return Response({"response": "Has cerrado sesión exitosamente!"}, status=status.HTTP_200_OK)
-
 
 @api_view(['POST'])
 def registration_view(request):
@@ -162,7 +155,7 @@ def registration_view(request):
         return Response(data)
   
 # Vista del perfil de usuario
-class UserProfileView(generics.APIView):
+class UserProfileView(generics.ListAPIView):
     permission_classes = [IsAuthenticated]
 
     def get(self, request):
@@ -170,7 +163,6 @@ class UserProfileView(generics.APIView):
         data = {
             "username": user.username,
             "email": user.email,
-
         }
         return Response(data)
 ```
@@ -196,7 +188,7 @@ urlpatterns = [
 
 ## Probando con Postman
 
-Estos son los usuarios que tengo actualmente resgistrados
+Estos son los usuarios que tengo actualmente registrados
 
 ![1760675866403](image/readme/1760675866403.png)
 
@@ -258,6 +250,8 @@ value: refresh token
 
 - http://localhost:8000/account/profile/
 
+![1760751184271](image/readme/1760751184271.png)
+
 ### Probamos con un token expirado
 
 ![1760676507114](image/readme/1760676507114.png)
@@ -274,7 +268,7 @@ value: refresh token
 
 ![1760676659376](image/readme/1760676659376.png)
 
-### Probando con contraseá errada
+### Probando con contraseña errada
 
 - http://localhost:8000/account/api/token/
 
